@@ -107,32 +107,32 @@ def generate_launch_description():
         emulate_tty=True
     )
 
-    # launch realsense camera node
-    cam_feed_launch_file = PathJoinSubstitution(
-        [FindPackageShare("realsense2_camera"), "launch", "rs_launch.py"]
-    )
-
-    camera_feed_depth_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(cam_feed_launch_file),
-        launch_arguments={
-            "pointcloud.enable": "true",
-            "enable_rgbd": "true",
-            "enable_sync": "true",
-            "align_depth.enable": "true",
-            "enable_color": "true",
-            "enable_depth": "true",
-        }.items(),
-        condition=IfCondition(LaunchConfiguration('use_depth_input'))
-    )
-
-    camera_feed_node = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(cam_feed_launch_file),
-        launch_arguments={
-            "pointcloud.enable": "true",
-            "enable_color": "true",
-        }.items(),
-        condition=UnlessCondition(LaunchConfiguration('use_depth_input'))
-    )
+    # # launch realsense camera node
+    # cam_feed_launch_file = PathJoinSubstitution(
+    #     [FindPackageShare("realsense2_camera"), "launch", "rs_launch.py"]
+    # )
+    #
+    # camera_feed_depth_node = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(cam_feed_launch_file),
+    #     launch_arguments={
+    #         "pointcloud.enable": "true",
+    #         "enable_rgbd": "true",
+    #         "enable_sync": "true",
+    #         "align_depth.enable": "true",
+    #         "enable_color": "true",
+    #         "enable_depth": "true",
+    #     }.items(),
+    #     condition=IfCondition(LaunchConfiguration('use_depth_input'))
+    # )
+    #
+    # camera_feed_node = IncludeLaunchDescription(
+    #     PythonLaunchDescriptionSource(cam_feed_launch_file),
+    #     launch_arguments={
+    #         "pointcloud.enable": "true",
+    #         "enable_color": "true",
+    #     }.items(),
+    #     condition=UnlessCondition(LaunchConfiguration('use_depth_input'))
+    # )
 
     write_markers_to_json = ExecuteProcess(
         cmd=[
@@ -160,8 +160,8 @@ def generate_launch_description():
 
         # Nodes
         aruco_node, 
-        camera_feed_depth_node,
-        camera_feed_node,
+        # camera_feed_depth_node,
+        # camera_feed_node,
 
         # Save markers pose
         write_markers_to_json
