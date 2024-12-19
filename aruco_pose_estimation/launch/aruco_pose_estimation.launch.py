@@ -134,17 +134,6 @@ def generate_launch_description():
     #     condition=UnlessCondition(LaunchConfiguration('use_depth_input'))
     # )
 
-    write_markers_to_json = ExecuteProcess(
-        cmd=[
-            "python3",
-            os.path.join(
-                os.getcwd(),
-                'src/ros2-aruco-pose-estimation/aruco_pose_estimation/scripts/write_markers_to_json.py'
-            )
-        ],
-        output='screen'
-    )
-
     return LaunchDescription([
         # Arguments
         marker_size_arg,
@@ -162,7 +151,4 @@ def generate_launch_description():
         aruco_node, 
         # camera_feed_depth_node,
         # camera_feed_node,
-
-        # Save markers pose
-        write_markers_to_json
     ])
