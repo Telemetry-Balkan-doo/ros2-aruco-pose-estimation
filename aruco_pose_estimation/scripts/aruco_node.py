@@ -372,14 +372,19 @@ class ArucoNode(rclpy.node.Node):
         )
 
 
-def main():
-    rclpy.init()
+def main(args=None):
+    rclpy.init(args=args)
     node = ArucoNode()
-    rclpy.spin(node)
+
+    try:
+        rclpy.spin(node)
+    except (KeyboardInterrupt, rclpy.exceptions.ROSInterruptException):
+        pass
 
     node.destroy_node()
-    rclpy.shutdown()
+    if rclpy.get_default_context().ok():
+        rclpy.shutdown()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
